@@ -12,7 +12,7 @@ export default function App() {
         <View style={styles.progressCard}>
           <Text style={styles.progressText}>Progress this week ( ______ )</Text>
         </View>
-        <Text style={styles.timeLeftText}>Time Left: ___</Text>
+        <Text style={styles.timeLeftText}>Time Left: __</Text>
       </View>
       
       {/*<View style={styles.progressWrapper}>
