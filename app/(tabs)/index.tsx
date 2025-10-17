@@ -1,8 +1,5 @@
-import Clock from "@/components/Clock";
-import StopwatchButton from "@/components/StopwatchButton";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import CircularProgress from 'react-native-circular-progress-indicator';
+import { StyleSheet, Text, View } from "react-native";
 
 export default function App() {
   const [value, setValue] = useState(0);
@@ -11,7 +8,14 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      <View style={styles.progressWrapper}>
+      <View style={styles.card}>
+        <View style={styles.progressCard}>
+          <Text style={styles.progressText}>Progress this week ( ______ )</Text>
+        </View>
+        <Text style={styles.timeLeftText}>Time Left: ___</Text>
+      </View>
+      
+      {/*<View style={styles.progressWrapper}>
         <CircularProgress
           radius={180}
           value={85}
@@ -31,6 +35,7 @@ export default function App() {
           </View>
         </View>
       </View>
+      */}
     </View>
   );
 };
@@ -38,10 +43,35 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "flex-start",
     alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#1f419b",
   },
+  card: {
+    marginTop: 30,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderWidth: 5,
+    borderColor: '#ff4539',
+    borderStyle: 'solid',
+    margin: 10,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+  },
+  progressCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  progressText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  timeLeftText: {
+
+  }
+  /*
   progressWrapper: {
     position: "relative",
     alignItems: "center",
@@ -57,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   optionsContainer: {
-    top: 50,
+    bottom: 120,
     position: 'fixed',
   },
   optionsRow: {
@@ -65,6 +95,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   }
+  */
 });
 
 
