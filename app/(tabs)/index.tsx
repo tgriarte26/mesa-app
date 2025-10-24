@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import Stopwatch from "@/components/Stopwatch";
+import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import ProgressBar  from '../../components/ProgressBar';
+import ProgressBar from '../../components/ProgressBar';
 
 export default function App() {
   const [value, setValue] = useState(0);
@@ -20,6 +21,9 @@ export default function App() {
           </View>
         </View>
         <Text style={styles.timeLeftText}>Time Left:</Text>
+      </View>
+      <View style={styles.card}>
+        <Stopwatch />
       </View>
       {/*<View style={styles.progressWrapper}>
         <CircularProgress

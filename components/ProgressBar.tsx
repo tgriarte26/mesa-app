@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Animated, View, StyleSheet, Text } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 
 const Progress = ({step, steps, height}) => {
   const animatedValue = React.useRef(new Animated.Value(-1000)).current;
@@ -41,7 +41,7 @@ const Progress = ({step, steps, height}) => {
         height,
         width: '100%',
         borderRadius: height,
-        backgroundColor: 'rgba(0, 255, 47, 0.5)',
+        backgroundColor: 'rgba(0,0,0,0.5)',
         position: 'flex',
         left: 0,
         top: 0,
