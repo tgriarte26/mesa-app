@@ -38,6 +38,14 @@ export default function Stopwatch({ recordTime = true }) {
     return `${minutes}:${seconds}:${milliseconds}`;
   };
 
+  const handleCheck = (logTime: number, index: number) => {
+    console.log(`✅ Checked log #${index + 1}: ${formatTime(logTime)}`)
+  };
+
+  const handleDelete = (index: number) => {
+    setLogs((prev) => prev.filter((_, i) => i !== index));
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -55,27 +63,49 @@ export default function Stopwatch({ recordTime = true }) {
             </Text>
           </Pressable>
           <Pressable
-            style={[styles.button, styles.resetButton]}y
+            style={[styles.button, styles.resetButton]}
             onPress={resetHandler}
           >
             <Text style={styles.buttonText}>Reset</Text>
           </Pressable>
         </View>
       </View>
-      <View>
+
         {recordTime && logs.length > 0 && (
           <View style={styles.logContainer}>
             <Text style={styles.logTitle}>Logged Times:</Text>
-            <ScrollView style={styles.scroll}>
+            <ScrollView style={styles.scroll} contentContainerStyle={{ paddingBottom: 20 }}>
               {logs.map((logTime, idx) => (
-                <Text key={idx} style={styles.logText}>
-                  {formatTime(logTime)}
-                </Text>
+                <View key={idx} style={styles.logRow}>
+                  <View style={styles.shiftButtons}>
+                    
+                  </View>
+                    <Text style={styles.logText}>{formatTime(logTime)}</Text>
+                    <Pressable
+                      style={({ pressed }) => [
+                        styles.iconButton,
+                        styles.checkButton,
+                        pressed && {opacity: 0.7},
+                      ]}
+                      onPress={() => handleCheck(logTime, idx)}
+                      >
+                        <Text style={styles.iconText}>✔</Text>
+                      </Pressable>
+                    <Pressable
+                      style ={({ pressed }) => [
+                        styles.iconButton,
+                        styles.deleteButton,
+                        pressed && { opacity: 0.7 },
+                      ]}
+                      onPress={() => handleDelete(idx)}
+                    >
+                      <Text style={styles.iconText}>✖</Text>
+                    </Pressable>
+                </View>
               ))}
             </ScrollView>
           </View>
         )}
-      </View>
     </View>
   );
 }
@@ -83,7 +113,7 @@ export default function Stopwatch({ recordTime = true }) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "space-between",
+    alignItems: "center",
   },
   container: {
     alignItems: "center",
@@ -116,12 +146,48 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   logContainer: {
-    marginTop: 20,
-    paddingHorizontal: 20,
+    backgroundColor: "black",
+    marginTop: 30,
+    borderRadius: 10,
+    padding: 10,
+    width: 300,
+    height: "100%",
+  },
+  logRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 8,
+    paddingVertical: 10,
+    marginBottom: 8,
+  },
+  iconButton: {
+    width: 80,
+    height: 30,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconText: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  checkButton: {
+    backgroundColor: "green",
+  },
+  deleteButton: {
+    backgroundColor: "red",
   },
   logTitle: {
     fontSize: 20,
     color: "white",
     fontWeight: "bold",
   },
+  scroll: {
+    flexGrow: 1,
+  },
+  logText: {
+    color: "#ccc",
+    fontSize: 16,
+    marginBottom: 5,
+  }
 });

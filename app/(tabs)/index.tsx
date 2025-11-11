@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   stopWatchText: {
     fontWeight: 'bold',
     color: '#1f419b',
-    fontSize: 20,
+    fontSize: 28,
   },
   timeLeftText: {
     marginTop: 10,
