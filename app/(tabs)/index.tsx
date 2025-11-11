@@ -4,10 +4,14 @@ import { StyleSheet, Text, View } from "react-native";
 import ProgressBar from '../../components/ProgressBar';
 
 export default function App() {
-  const [value, setValue] = useState(0);
-  const onStartTimer = () => {
-    //write later
-  }
+  const WEEKLY_GOAL = 5 * 3600;
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  const timeLeft = Math.max(WEEKLY_GOAL - elapsedTime, 0);
+  const hoursLeft = Math.floor(timeLeft / 3600);
+  const minutesLeft = Math.floor((timeLeft % 3600) / 60);
+  const secondsLeft = Math.floor(timeLeft % 60);
+  
   return (
     <View style={styles.container}>
       <View style={styles.titleCard}>
@@ -17,35 +21,19 @@ export default function App() {
         <View style={styles.progressCard}>
           <Text style={styles.progressText}>Progress this week</Text>
           <View style={styles.progressBarWrapper}>
-            <ProgressBar/>
+            <ProgressBar />
           </View>
-        </View>
-        <Text style={styles.timeLeftText}>Time Left:</Text>
+        </View>    
+        <Text style={styles.timeLeftText}>
+          Time Left: {hoursLeft}h {minutesLeft}m {secondsLeft}s
+        </Text>
       </View>
       <View style={styles.card}>
-        <Stopwatch />
-      </View>
-      {/*<View style={styles.progressWrapper}>
-        <CircularProgress
-          radius={180}
-          value={85}
-          inActiveStrokeColor={'#2ecc71'}
-          inActiveStrokeOpacity={0.2}
-          inActiveStrokeWidth={6}
-          duration={3000}
-          onAnimationComplete={() => setValue(50)}
-          progressValueColor="transparent"
-        />
-        <View style={styles.overlay}>
-          <Clock />
+        <View style={styles.progressCard}>
+          <Text style={styles.stopWatchText}>Stopwatch</Text>
         </View>
-        <View style={styles.optionsContainer}>
-          <View style={styles.optionsRow}>
-              <StopwatchButton onPress={onStartTimer}/>
-          </View>
-        </View>
+        <Stopwatch onTimeUpdate={setElapsedTime} />
       </View>
-      */}
     </View>
   );
 };
@@ -81,7 +69,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    borderWidth: 3,
+    borderWidth: 5,
     borderColor: '#ff4539',
     borderStyle: 'solid',
     marginTop: 15,
@@ -89,7 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '90%',
-    height: '20%',
+    height: '22%',
   },
   progressCard: {
     justifyContent: 'center',
@@ -97,7 +85,12 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 25,
+  },
+  stopWatchText: {
+    fontWeight: 'bold',
+    color: '#1f419b',
+    fontSize: 20,
   },
   timeLeftText: {
     marginTop: 10,
@@ -105,31 +98,6 @@ const styles = StyleSheet.create({
   progressBarWrapper: {
     width: 300,
   }
-  /*
-  progressWrapper: {
-    position: "relative",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  optionsContainer: {
-    bottom: 120,
-    position: 'fixed',
-  },
-  optionsRow: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  }
-  */
 });
 
 
