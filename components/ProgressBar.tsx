@@ -34,8 +34,8 @@ const Progress = ({progress, height}) => {
     }}>
       <Animated.View style={{
         height,
-        width: animatedValue,
-        borderRadius: height / 2,
+        width: '100%',
+        borderRadius: height,
         backgroundColor: 'rgba(0, 255, 102, 0.83)',
         position: 'flex',
         left: 0,
