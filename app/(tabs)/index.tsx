@@ -4,18 +4,21 @@ import { StyleSheet, Text, View } from "react-native";
 import ProgressBar from '../../components/ProgressBar';
 
 export default function App() {
-  const WEEKLY_GOAL = 5 * 3600;
+  const WEEKLY_GOAL = 0.01 * 3600;
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(WEEKLY_GOAL);
+  const [progress, setProgress] = useState(1);
 
-  const timeLeft = Math.max(WEEKLY_GOAL - elapsedTime, 0);
   const hoursLeft = Math.floor(timeLeft / 3600);
   const minutesLeft = Math.floor((timeLeft % 3600) / 60);
   const secondsLeft = Math.floor(timeLeft % 60);
   
+
   return (
+    <>
     <View style={styles.container}>
       <View style={styles.titleCard}>
-        <Text style={styles.titleText}>ME5A Hours for El Camino College helps you track your time spend in MESA to fulfill your 5 hour requirement each week.</Text>
+        <Text style={styles.titleText}>Fulfill your 5 hour requirement each week.</Text>
       </View>
       <View style={styles.card}>
         <View style={styles.progressCard}>
@@ -23,7 +26,7 @@ export default function App() {
           <View style={styles.progressBarWrapper}>
             <ProgressBar />
           </View>
-        </View>    
+        </View>
         <Text style={styles.timeLeftText}>
           Time Left: {hoursLeft}h {minutesLeft}m {secondsLeft}s
         </Text>
@@ -32,9 +35,20 @@ export default function App() {
         <View style={styles.progressCard}>
           <Text style={styles.stopWatchText}>Stopwatch</Text>
         </View>
-        <Stopwatch onTimeUpdate={setElapsedTime} />
+        <Stopwatch 
+          onCheck={(logTime) => {
+            const logSeconds = Math.floor(logTime / 1000);
+            const newElapsed = elapsedTime + logSeconds
+            setElapsedTime(newElapsed);
+            const newTimeLeft = Math.max(WEEKLY_GOAL - newElapsed, 0);
+            setTimeLeft(newTimeLeft);
+            setProgress(newTimeLeft / WEEKLY_GOAL);
+          }}
+          />
       </View>
     </View>
+    </>
+    
   );
 };
 
@@ -65,6 +79,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 800,
     fontSize: 20,
+    textAlign: "center",
   },
   card: {
     backgroundColor: '#fff',

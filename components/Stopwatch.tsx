@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
-export default function Stopwatch({ recordTime = true }) {
+export default function Stopwatch({ recordTime = true, onCheck }) {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [logs, setLogs] = useState<number[]>([]);
@@ -39,7 +39,10 @@ export default function Stopwatch({ recordTime = true }) {
   };
 
   const handleCheck = (logTime: number, index: number) => {
-    console.log(`✅ Checked log #${index + 1}: ${formatTime(logTime)}`)
+    setLogs((prev) => prev.filter((_, i) => i !== index));
+    if(onCheck) {
+      onCheck(logTime);
+    }
   };
 
   const handleDelete = (index: number) => {
@@ -77,10 +80,8 @@ export default function Stopwatch({ recordTime = true }) {
             <ScrollView style={styles.scroll} contentContainerStyle={{ paddingBottom: 20 }}>
               {logs.map((logTime, idx) => (
                 <View key={idx} style={styles.logRow}>
+                  <Text style={styles.logText}>{formatTime(logTime)}</Text>
                   <View style={styles.shiftButtons}>
-                    
-                  </View>
-                    <Text style={styles.logText}>{formatTime(logTime)}</Text>
                     <Pressable
                       style={({ pressed }) => [
                         styles.iconButton,
@@ -101,6 +102,7 @@ export default function Stopwatch({ recordTime = true }) {
                     >
                       <Text style={styles.iconText}>✖</Text>
                     </Pressable>
+                  </View>
                 </View>
               ))}
             </ScrollView>
@@ -150,8 +152,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderRadius: 10,
     padding: 10,
-    width: 300,
-    height: "100%",
+    width: "auto",
+    height: "160%"
   },
   logRow: {
     flexDirection: "row",
@@ -189,5 +191,10 @@ const styles = StyleSheet.create({
     color: "#ccc",
     fontSize: 16,
     marginBottom: 5,
+  },
+  shiftButtons: {
+    flexDirection: "row",
+    marginLeft: 10,
+    justifyContent: "space-between",
   }
 });
